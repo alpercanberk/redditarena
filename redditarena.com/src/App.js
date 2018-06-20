@@ -1,13 +1,24 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+
+import "./index.css";
+
+import Title from "./components/title";
+import Bracket from "./components/bracket";
+import PastWinners from "./components/pastwinners";
+import WeeklyMatchup from "./components/weeklymatchup";
+
+import testingdata from "./testingdata.json";
+
 
 class App extends Component {
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Welcome to Reddit Arena</h1>
+          <Title />
+          <Bracket data={testingdata} />
+          <PastWinners />
+          <WeeklyMatchup />
         </header>
       </div>
     );
