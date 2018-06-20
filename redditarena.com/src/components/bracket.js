@@ -1,29 +1,12 @@
 import React, { Component } from "react";
 import "../index.css";
 import bracket from "../images/8bracket.jpg";
+import BracketThumbnail from "./bracket_thumbnail.js";
 
 class Bracket extends Component {
   constructor(props) {
     super(props);
     console.log(props.data);
-  }
-
-  bracketThumbnail(topmargin, leftmargin = 0, image = 0) {
-    console.log(topmargin.toString() + "px");
-    return (
-      <div
-        style={{
-          position: "absolute",
-          height: "75px",
-          width: "100px",
-          backgroundColor: "white",
-          border: "solid black",
-          borderRadius: "5px",
-          marginTop: topmargin.toString() + "px",
-          marginLeft: leftmargin.toString() + "px"
-        }}
-      />
-    );
   }
 
   render() {
@@ -41,25 +24,45 @@ class Bracket extends Component {
             backgroundSize: "100% 500px"
           }}
         >
-          {(() => this.bracketThumbnail(30))()}
-          {(() => this.bracketThumbnail(160))()}
-          {(() => this.bracketThumbnail(290))()}
-          {(() => this.bracketThumbnail(420))()}
+          <BracketThumbnail marginTop="34" marginLeft="0" name="Box One" />
+          <BracketThumbnail marginTop="164" marginLeft="0" name="Box Two" />
+          <BracketThumbnail marginTop="294" marginLeft="0" name="Box Three" />
+          <BracketThumbnail marginTop="424" marginLeft="0" name="Box Four" />
 
-          {(() => this.bracketThumbnail(30, 895))()}
-          {(() => this.bracketThumbnail(160, 895))()}
-          {(() => this.bracketThumbnail(290, 895))()}
-          {(() => this.bracketThumbnail(420, 895))()}
+          <BracketThumbnail marginTop="34" marginLeft="890" name="Box Five" />
+          <BracketThumbnail marginTop="164" marginLeft="890" name="Box Six" />
+          <BracketThumbnail marginTop="294" marginLeft="890" name="Box Seven" />
+          <BracketThumbnail marginTop="424" marginLeft="890" name="Box Eight" />
 
-          {(() => this.bracketThumbnail(95, 200))()}
-          {(() => this.bracketThumbnail(225, 300))()}
-          {(() => this.bracketThumbnail(355, 200))()}
+          <BracketThumbnail marginTop="100" marginLeft="180" name="Box Nine" />
+          <BracketThumbnail marginTop="360" marginLeft="180" name="Box Ten" />
 
-          {(() => this.bracketThumbnail(95, 700))()}
-          {(() => this.bracketThumbnail(225, 600))()}
-          {(() => this.bracketThumbnail(355, 700))()}
+          <BracketThumbnail
+            marginTop="100"
+            marginLeft="710"
+            name="Box Eleven"
+          />
+          <BracketThumbnail
+            marginTop="360"
+            marginLeft="710"
+            name="Box Twelve"
+          />
 
-          {(() => this.bracketThumbnail(225, 445))()}
+          <BracketThumbnail
+            marginTop="230"
+            marginLeft="600"
+            name="Box Thirteen"
+          />
+          <BracketThumbnail
+            marginTop="230"
+            marginLeft="450"
+            name="Box Fourteen"
+          />
+          <BracketThumbnail
+            marginTop="230"
+            marginLeft="290"
+            name="Box Fifteen"
+          />
         </div>
       </div>
     );
