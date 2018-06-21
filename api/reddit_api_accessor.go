@@ -13,25 +13,25 @@ func getBosses() (jsonPtr *[]byte) {
 	client := &http.Client{} // Create the client
 	// Do the request
 	req, err := http.NewRequest("GET", "https://reddit.com/r/BossFights/hot.json?limit=8&show=all", nil)
-	if err != nil {             // Handle error
-		fmt.Println(err)    // Print error
-		os.Exit(1)          // Exit with code 1
+	if err != nil { // Handle error
+		fmt.Println(err) // Print error
+		os.Exit(1)       // Exit with code 1
 	}
 
 	// Set User-Agent. DO NOT DELETE. This line makes getting the response possible.
 	req.Header.Add("User-Agent", "osx:redditarena:v1 (by /u/GrEnAdIfY)")
 	resp, err := client.Do(req) // Do the request, GET the response.
 	if err != nil {             // Handle error
-		fmt.Println(err)    // Print error
-		os.Exit(1)          // Exit with code 1
+		fmt.Println(err) // Print error
+		os.Exit(1)       // Exit with code 1
 	}
-	defer resp.Body.Close()     // Defer the close of the response
+	defer resp.Body.Close() // Defer the close of the response
 
 	byteSlice, err := ioutil.ReadAll(resp.Body) // Read the response into "byteSlice"
-	if err != nil {             // Handle error
-		fmt.Println(err)    // Print error
-		os.Exit(1)          // Exit with code 1
+	if err != nil {                             // Handle error
+		fmt.Println(err) // Print error
+		os.Exit(1)       // Exit with code 1
 	}
-	jsonPtr = &byteSlice        // Create and
-	return                      // return the pointer
+	jsonPtr = &byteSlice // Create and
+	return               // return the pointer
 }

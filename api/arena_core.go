@@ -11,8 +11,8 @@ Example database:
 
 KEY             | TYPE   | VALUE
 ----------------+--------+------------------------
-nextMatchId     | STRING | 1
-nextBossId      | STRING | 8
+nextMatchID     | STRING | 1
+nextBossID      | STRING | 8
 boss:0          | HASH   | {"title": "asdfasdfa", "ups": "140", "thumbnail": "<some imgur link>", "image": "<some other imgur link>", "permalink": "<some reddit link>"}
 boss:1          | HASH   |     ~"
 .               |        |
@@ -45,15 +45,15 @@ func runMatches(d ResponseStruct) {
 	redisClient.Set("match:"+matchId+":date", date, 0) // Set the date of the match on the database
 	redisClient.Incr("nextMatchID")                    // Increment match ID for next match
 	var bosses = make([]Boss, 8, 8)                    // Make array to copy bosses out of d.Data.Children
-	                                                   // If the bosses aren't copied, for some reason, the ID's don't get set properly
+	// If the bosses aren't copied, for some reason, the ID's don't get set properly
 
-	for i, boss := range d.Data.Children {                                 // Iterate over the bosses in d.Data.Children
-		id := redisClient.Get("nextBossID").Val()                      // Assign ID
-		boss.Id, _ = strconv.Atoi(id)                                  // ^
-		bosses[i] = boss                                               // This is here to copy the boss out of "d.Data.Children" to "bosses"
-		                                                               // If this isn't done, for some reason, the ID's dont get set properly 
+	for i, boss := range d.Data.Children { // Iterate over the bosses in d.Data.Children
+		id := redisClient.Get("nextBossID").Val() // Assign ID
+		boss.Id, _ = strconv.Atoi(id)             // ^
+		bosses[i] = boss                          // This is here to copy the boss out of "d.Data.Children" to "bosses"
+		// If this isn't done, for some reason, the ID's dont get set properly
 
-		redisClient.Incr("nextBossID")                                 // Increment ID for next boss
+		redisClient.Incr("nextBossID") // Increment ID for next boss
 
 		redisClient.HSet("boss:"+id, "title", boss.Data.Title)         // Set title     to database
 		redisClient.HSet("boss:"+id, "ups", boss.Data.Ups)             // Set ups       to database
@@ -61,12 +61,34 @@ func runMatches(d ResponseStruct) {
 		redisClient.HSet("boss:"+id, "image", boss.Data.Image)         // Set image     to database
 		redisClient.HSet("boss:"+id, "permalink", boss.Data.Permalink) // Set permalink to database
 
-		redisClient.SAdd("match:"+matchId+":quarter", id)              // Add boss to the quarterfinalists (all competitors are QFists from the start)
+		redisClient.SAdd("match:"+matchId+":quarter", id) // Add boss to the quarterfinalists (all competitors are QFists from the start)
 	}
 
 	finalists := fightSlice(fightSlice(bosses, matchId, "semi"), matchId, "final") // Fight and set until 2 bosses left
 	champ := fight(finalists[0], finalists[1]).Id                                  // Get champion
 	redisClient.Set("match:"+matchId+":winner", champ, 0)                          // Set champion to the database
+}
+
+// getBoss() is a shorthand for the sphagetti process of HGetAll("boss:" + id).
+func getBoss(id string) map[string]string {
+	return redisClient.HGetAll("boss:" + id).Val()
+}
+
+// getMatch() is... the ultimate shorthand. (for this project)
+func getMatch(id string) map[string][]string {
+	return map[string][]string{
+		"quarter": redisClient.SMembers("match:" + id + ":quarter").Val(),
+		"semi":    redisClient.SMembers("match:" + id + ":semi").Val(),
+		"final":   redisClient.SMembers("match:" + id + ":final").Val(),
+		"winner":  []string{redisClient.Get("match:" + id + ":winner").Val()},
+	}
+}
+
+// getLatestMatch() is a wrapper for getMatch() that automatically gives the latest ID
+// as the parameter for getMatch().
+func getLatestMatch() map[string][]string {
+	rawId, _ := strconv.Atoi(redisClient.Get("nextMatchID").Val())
+	return getMatch(strconv.Itoa(rawId - 1))
 }
 
 // fight() makes two given bosses fight. The boss with highest upvotes has the advantage.
@@ -81,9 +103,9 @@ func fight(b1 Boss, b2 Boss) (winner Boss) {
 	two := b2.Data.Ups        // "
 	r := rand.Intn(one + two) // Throws the slider
 	if r <= one {             // If the random number is in b1's area,
-		winner = b1       // b1 wins!
-	} else {                  // If it isn't,
-		winner = b2       // b2 wins!
+		winner = b1 // b1 wins!
+	} else { // If it isn't,
+		winner = b2 // b2 wins!
 	}
 	return
 }
