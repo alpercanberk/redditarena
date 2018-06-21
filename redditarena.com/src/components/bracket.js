@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import "../index.css";
 import bracket from "../images/8bracket.jpg";
 import BracketThumbnail from "./bracket_thumbnail.js";
+import axios from "axios";
+
+const murl = "https://localhost:1226/get_match/"; //match url
+const burl = "https://localhost:1226/get_boss/"; //boss url
 
 const dummydata = {
   name: "Box",
@@ -16,8 +20,33 @@ class Bracket extends Component {
   constructor(props) {
     super(props);
     console.log(props.data);
+    this.state = {
+      bosses: []
+    };
   }
 
+  componentDidMount() {
+    //big request
+    axios
+      .get(murl) //this gets the most recent match
+      .then(res => {
+        res.keys().map((
+          key //the keys of the response is mapped
+        ) =>
+          res[key] //the key is used to find ids of bosses from quarter, semi, final and winner keys
+            .map(id =>
+              axios
+                .get(burl + "id") //the id of each boss is used to get their data from another url
+                .then(
+                  res2 =>
+                    this.setState(prevState => ({
+                      bosses: [...prevState.bosses, res2]
+                    })) //the data of each boss is added to the state
+                )
+            )
+        );
+      });
+  }
   render() {
     return (
       <div>

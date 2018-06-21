@@ -50,12 +50,14 @@ body {
   border-style: solid;
   border-color: #2b2b2b;
   cursor: pointer;
+  box-shadow: 2px 2px black;
 }
 
 .bossthumbnail:not(:hover) {
   border: solid;
   border-radius: "5px";
   border-color: black;
+  box-shadow: 2px 2px black, 10px 10px 5px rgba(0.5, 0.5, 0.5, 0.3);
 }
 
 .bossdialogimage {

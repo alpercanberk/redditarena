@@ -9,8 +9,6 @@ import Bracket from "./components/bracket";
 import PastWinners from "./components/pastwinners";
 import WeeklyMatchup from "./components/weeklymatchup";
 
-import testingdata from "./testingdata.json";
-
 class App extends Component {
   render() {
     return (
@@ -18,7 +16,7 @@ class App extends Component {
         <div className="App">
           <header className="App-header">
             <Title />
-            <Bracket data={testingdata} />
+            <Bracket />
             <PastWinners />
             <WeeklyMatchup />
           </header>
