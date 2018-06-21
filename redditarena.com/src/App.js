@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-
+import "./assets/react-toolbox/theme.css";
+import theme from "./assets/react-toolbox/theme.js";
+import ThemeProvider from "react-toolbox/lib/ThemeProvider";
 import "./index.css";
 
 import Title from "./components/title";
@@ -9,18 +11,19 @@ import WeeklyMatchup from "./components/weeklymatchup";
 
 import testingdata from "./testingdata.json";
 
-
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <Title />
-          <Bracket data={testingdata} />
-          <PastWinners />
-          <WeeklyMatchup />
-        </header>
-      </div>
+      <ThemeProvider theme={theme}>
+        <div className="App">
+          <header className="App-header">
+            <Title />
+            <Bracket data={testingdata} />
+            <PastWinners />
+            <WeeklyMatchup />
+          </header>
+        </div>
+      </ThemeProvider>
     );
   }
 }
