@@ -25,9 +25,9 @@ body {
   color: red;
 }
 
-.title{
-  margin-top:50px;
-  font-size:large;
+.title {
+  margin-top: 50px;
+  font-size: large;
   text-decoration: underline;
 }
 
@@ -38,4 +38,30 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+.bossthumbnail {
+  border-radius: 5px;
+}
+
+.bossthumbnail:hover {
+  margin: 2px;
+  border: solid;
+  border-style: solid;
+  border-color: #2b2b2b;
+  cursor: pointer;
+}
+
+.bossthumbnail:not(:hover) {
+  border: solid;
+  border-radius: "5px";
+  border-color: black;
+}
+
+.bossdialogimage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  border-radius: 5px;
 }

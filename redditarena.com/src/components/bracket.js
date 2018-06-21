@@ -3,6 +3,15 @@ import "../index.css";
 import bracket from "../images/8bracket.jpg";
 import BracketThumbnail from "./bracket_thumbnail.js";
 
+const dummydata = {
+  name: "Box",
+  ups: "32",
+  thumbnail_image:
+    "https://b.thumbs.redditmedia.com/jJ1jvZ22CY7CoYdL8y5xRA6TmeBodjBuqF9cDZYoAbo.jpg",
+  image:
+    "https://i.redditmedia.com/9Co2pdqU0f6OsbNQrioMWBlQkDWxhJ0tQKZhBT02tSA.jpg?w=769&s=4a1d194b0f4215f32a792977cdf4efbe"
+};
+
 class Bracket extends Component {
   constructor(props) {
     super(props);
@@ -24,45 +33,25 @@ class Bracket extends Component {
             backgroundSize: "100% 500px"
           }}
         >
-          <BracketThumbnail marginTop="34" marginLeft="0" name="Box One" />
-          <BracketThumbnail marginTop="164" marginLeft="0" name="Box Two" />
-          <BracketThumbnail marginTop="294" marginLeft="0" name="Box Three" />
-          <BracketThumbnail marginTop="424" marginLeft="0" name="Box Four" />
+          <BracketThumbnail marginTop="34" marginLeft="0" data={dummydata} />
+          <BracketThumbnail marginTop="164" marginLeft="0" data={dummydata} />
+          <BracketThumbnail marginTop="294" marginLeft="0" data={dummydata} />
+          <BracketThumbnail marginTop="424" marginLeft="0" data={dummydata} />
 
-          <BracketThumbnail marginTop="34" marginLeft="890" name="Box Five" />
-          <BracketThumbnail marginTop="164" marginLeft="890" name="Box Six" />
-          <BracketThumbnail marginTop="294" marginLeft="890" name="Box Seven" />
-          <BracketThumbnail marginTop="424" marginLeft="890" name="Box Eight" />
+          <BracketThumbnail marginTop="34" marginLeft="890" data={dummydata} />
+          <BracketThumbnail marginTop="164" marginLeft="890" data={dummydata} />
+          <BracketThumbnail marginTop="294" marginLeft="890" data={dummydata} />
+          <BracketThumbnail marginTop="424" marginLeft="890" data={dummydata} />
 
-          <BracketThumbnail marginTop="100" marginLeft="180" name="Box Nine" />
-          <BracketThumbnail marginTop="360" marginLeft="180" name="Box Ten" />
+          <BracketThumbnail marginTop="100" marginLeft="180" data={dummydata} />
+          <BracketThumbnail marginTop="360" marginLeft="180" data={dummydata} />
 
-          <BracketThumbnail
-            marginTop="100"
-            marginLeft="710"
-            name="Box Eleven"
-          />
-          <BracketThumbnail
-            marginTop="360"
-            marginLeft="710"
-            name="Box Twelve"
-          />
+          <BracketThumbnail marginTop="100" marginLeft="710" data={dummydata} />
+          <BracketThumbnail marginTop="360" marginLeft="710" data={dummydata} />
 
-          <BracketThumbnail
-            marginTop="230"
-            marginLeft="600"
-            name="Box Thirteen"
-          />
-          <BracketThumbnail
-            marginTop="230"
-            marginLeft="450"
-            name="Box Fourteen"
-          />
-          <BracketThumbnail
-            marginTop="230"
-            marginLeft="290"
-            name="Box Fifteen"
-          />
+          <BracketThumbnail marginTop="230" marginLeft="600" data={dummydata} />
+          <BracketThumbnail marginTop="230" marginLeft="450" data={dummydata} />
+          <BracketThumbnail marginTop="230" marginLeft="290" data={dummydata} />
         </div>
       </div>
     );
