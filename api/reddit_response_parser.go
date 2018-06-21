@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 )
 
+// The following four structs are there for json.Unmarshal() to work. There is no
+// other reason.
 type ResponseStruct struct {
 	Data Data `json:"data"`
 }
@@ -22,6 +24,8 @@ type BossData struct {
 	Permalink string `json:"permalink"`
 }
 
+// parseResponse() unmarshals the response in the *[]byte, and returns a
+// corresponding ResponseStruct.
 func parseResponse(jsonPtr *[]byte) (parsedResponse ResponseStruct) {
 	parsedResponse = ResponseStruct{}
 	json.Unmarshal(*jsonPtr, &parsedResponse)
