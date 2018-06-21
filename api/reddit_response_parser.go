@@ -20,7 +20,7 @@ type BossData struct {
 	Ups       int    `json:"ups"`
 	Title     string `json:"title"`
 	Thumbnail string `json:"thumbnail"`
-	Image     string `json:"image"`
+	Url       string `json:"url"`
 	Permalink string `json:"permalink"`
 }
 

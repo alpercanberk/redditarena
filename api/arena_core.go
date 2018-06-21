@@ -13,7 +13,7 @@ KEY             | TYPE   | VALUE
 ----------------+--------+------------------------
 nextMatchID     | STRING | 1
 nextBossID      | STRING | 8
-boss:0          | HASH   | {"title": "asdfasdfa", "ups": "140", "thumbnail": "<some imgur link>", "image": "<some other imgur link>", "permalink": "<some reddit link>"}
+boss:0          | HASH   | {"title": "asdfasdfa", "ups": "140", "thumbnail": "<some imgur link>", "url": "<some other imgur link>", "permalink": "<some reddit link>"}
 boss:1          | HASH   |     ~"
 .               |        |
 .               |        |
@@ -58,7 +58,7 @@ func runMatches(d ResponseStruct) {
 		redisClient.HSet("boss:"+id, "title", boss.Data.Title)         // Set title     to database
 		redisClient.HSet("boss:"+id, "ups", boss.Data.Ups)             // Set ups       to database
 		redisClient.HSet("boss:"+id, "thumbnail", boss.Data.Thumbnail) // Set thumbnail to database
-		redisClient.HSet("boss:"+id, "image", boss.Data.Image)         // Set image     to database
+		redisClient.HSet("boss:"+id, "url", boss.Data.Url)             // Set url       to database
 		redisClient.HSet("boss:"+id, "permalink", boss.Data.Permalink) // Set permalink to database
 
 		redisClient.SAdd("match:"+matchId+":quarter", id) // Add boss to the quarterfinalists (all competitors are QFists from the start)
