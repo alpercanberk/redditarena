@@ -8,7 +8,7 @@ import (
 )
 
 // getBossesAndUpdateDatabase requests the hot 8 bossfights from the Reddit API.
-func getBosses() (json string) {
+func getBosses() (jsonPtr *[]byte) {
 	// GET requests the hot 8 bossfights from the Reddit API
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", "https://reddit.com/r/BossFights/hot.json?limit=8&show=all", nil)
@@ -29,6 +29,6 @@ func getBosses() (json string) {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	json = string(byteSlice)
+	jsonPtr = &byteSlice
 	return
 }
