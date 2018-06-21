@@ -11,6 +11,7 @@ type Data struct {
 	Children []Boss `json:"children"`
 }
 type Boss struct {
+	Id   int
 	Data BossData `json:"data"`
 }
 type BossData struct {

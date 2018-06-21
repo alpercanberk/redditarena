@@ -11,4 +11,6 @@ var redisClient *redis.Client = redis.NewClient(&redis.Options{
 })
 
 func main() {
+	initDatabase()
+	runMatches(parseResponse(getBosses()))
 }
