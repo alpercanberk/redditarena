@@ -6,6 +6,9 @@ import axios from "axios";
 
 const murl = "http://localhost:1226/get_match"; //match url
 const burl = "http://localhost:1226/get_boss/"; //boss url
+const quarterMargins = [["34","0"], ["164","0"],["294","0"],["424","0"],["34","890"],["164","890"],["294","890"],["424","890"]];
+const semiMargins = [["100","180"],["360","180"],["100","710"],["360","710"]]
+const finalMargins = [["230","600"],["230","295"]]
 
 const dummydata = {
   title: "Box",
@@ -34,15 +37,13 @@ class Bracket extends Component {
       .get(murl) //this gets the most recent match and handles response
         .then(({ data }) => {                                 //response.data is an object which has also has object values
         console.log(data);
-        Object.keys(data).map((key, index) => {               //the keys of response.data is mapped
-
-          console.log(key, data[key], index);
-          let sub_object = data[key];                         //the values corresponding to the keys are also objects, these objects will
-          Object.keys(sub_object).map((sub_key, _index) => {  
-            let id = sub_object[sub_key];
-            axios.get(burl + id).then(res => {
+        Object.keys(data).map((key, index) => {               //the keys of response.data is mapped to access the inner objects
+          let sub_object = data[key];                         //each of the sub-objects are declared as sub_object for convenience
+          Object.keys(sub_object).map((sub_key, _index) => {  //sub_object's keys are mapped to access its values
+            let boss_id = sub_object[sub_key];                     //each boss's unique id is saved as boss_id
+            axios.get(burl + boss_id).then(res => {                //boss_id is used to get each boss's data
               if (key === "quarter") {
-                this.state.quarter[sub_key] = res.data;
+                this.state.quarter[sub_key] = res.data;       //the boss is uploaded to the corresponding match category
                 this.forceUpdate();
               } else if (key === "semi") {
                 this.state.semi[sub_key] = res.data;
@@ -54,8 +55,6 @@ class Bracket extends Component {
                 this.state.winner[sub_key] = res.data;
                 this.forceUpdate();
               }
-
-
             });
           });
         });
@@ -63,6 +62,36 @@ class Bracket extends Component {
   }
 
   render() {
+    let quarters = []
+    for (var i = 0; i < 8; i++) {
+      quarters.push(
+        <BracketThumbnail
+          marginTop={quarterMargins[i][0]}
+          marginLeft={quarterMargins[i][1]}
+          data={this.state.quarter[i]}
+        />
+      )
+    }
+    let semis = []
+    for (var i = 0; i < 4; i++) {
+      quarters.push(
+        <BracketThumbnail
+          marginTop={semiMargins[i][0]}
+          marginLeft={semiMargins[i][1]}
+          data={this.state.semi[i]}
+        />
+      )
+    }
+    let finals = []
+    for (var i = 0; i < 2; i++) {
+      quarters.push(
+        <BracketThumbnail
+          marginTop={finalMargins[i][0]}
+          marginLeft={finalMargins[i][1]}
+          data={this.state.final[i]}
+        />
+      )
+    }
     if (this.state.winner[0] != null) {
       return (
         <div>
@@ -78,82 +107,15 @@ class Bracket extends Component {
               backgroundSize: "100% 500px"
             }}
           >
-            <BracketThumbnail
-              marginTop="34"
-              marginLeft="0"
-              data={this.state.quarter[0]}
-            />
-            <BracketThumbnail
-              marginTop="164"
-              marginLeft="0"
-              data={this.state.quarter[1]}
-            />
-            <BracketThumbnail
-              marginTop="294"
-              marginLeft="0"
-              data={this.state.quarter[2]}
-            />
-            <BracketThumbnail
-              marginTop="424"
-              marginLeft="0"
-              data={this.state.quarter[3]}
-            />
-            <BracketThumbnail
-              marginTop="34"
-              marginLeft="890"
-              data={this.state.quarter[4]}
-            />
-            <BracketThumbnail
-              marginTop="164"
-              marginLeft="890"
-              data={this.state.quarter[5]}
-            />
-            <BracketThumbnail
-              marginTop="294"
-              marginLeft="890"
-              data={this.state.quarter[6]}
-            />
-            <BracketThumbnail
-              marginTop="424"
-              marginLeft="890"
-              data={this.state.quarter[7]}
-            />
-            <BracketThumbnail
-              marginTop="100"
-              marginLeft="180"
-              data={this.state.semi[0]}
-            />
-            <BracketThumbnail
-              marginTop="360"
-              marginLeft="180"
-              data={this.state.semi[1]}
-            />
-            <BracketThumbnail
-              marginTop="100"
-              marginLeft="710"
-              data={this.state.semi[2]}
-            />
-            <BracketThumbnail
-              marginTop="360"
-              marginLeft="710"
-              data={this.state.semi[3]}
-            />
-            <BracketThumbnail
-              marginTop="230"
-              marginLeft="600"
-              data={this.state.final[1]}
-            />
+            {quarters}
+            {semis}
+            {finals}
             <BracketThumbnail
               marginTop="230"
               marginLeft="450"
               data={this.state.winner[0]}
             />
-            <BracketThumbnail
-              marginTop="230"
-              marginLeft="290"
-              data={this.state.final[0]}
-            />
-            }
+
           </div>
         </div>
       );
