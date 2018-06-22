@@ -75,20 +75,31 @@ func getBoss(id string) map[string]string {
 }
 
 // getMatch() is... the ultimate shorthand. (for this project)
-func getMatch(id string) map[string][]string {
-	return map[string][]string{
-		"quarter": redisClient.LRange("match:" + id + ":quarter", 0, -1).Val(),
-		"semi":    redisClient.LRange("match:" + id + ":semi", 0, -1).Val(),
-		"final":   redisClient.LRange("match:" + id + ":final", 0, -1).Val(),
-		"winner":  []string{redisClient.Get("match:" + id + ":winner").Val()},
+func getMatch(id string) map[string]map[string]string {
+	return map[string]map[string]string{
+		"quarter": strSliceToMap(redisClient.LRange("match:" + id + ":quarter", 0, -1).Val()),
+		"semi":    strSliceToMap(redisClient.LRange("match:" + id + ":semi", 0, -1).Val()),
+		"final":   strSliceToMap(redisClient.LRange("match:" + id + ":final", 0, -1).Val()),
+		"winner":  strSliceToMap([]string{redisClient.Get("match:" + id + ":winner").Val()}),
 	}
 }
 
 // getLatestMatch() is a wrapper for getMatch() that automatically gives the latest ID
 // as the parameter for getMatch().
-func getLatestMatch() map[string][]string {
+func getLatestMatch() map[string]map[string]string {
 	rawId, _ := strconv.Atoi(redisClient.Get("nextMatchID").Val())
 	return getMatch(strconv.Itoa(rawId - 1))
+}
+
+// strSliceToMap converts a slice to a map. In this map, the key is the index as
+// a string, and the value is the element.
+// This is necessary so that the unorderedness of JSON doesn't fsck up the response.
+func strSliceToMap(s []string) map[string]string {
+	m := map[string]string{}
+	for i, e := range s {
+		m[strconv.Itoa(i)] = e
+	}
+	return m
 }
 
 // fight() makes two given bosses fight. The boss with highest upvotes has the advantage.
