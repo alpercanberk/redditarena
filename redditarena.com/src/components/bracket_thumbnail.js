@@ -31,7 +31,7 @@ class BracketThumbnail extends React.Component {
       >
         <div onClick={this.handleToggle}>
           <img
-            src={this.props.data.thumbnail_image}
+            src={this.props.data.thumbnail}
             width="100px"
             height="75px"
             className="bossthumbnail"
@@ -52,7 +52,7 @@ class BracketThumbnail extends React.Component {
                 zIndex: "1"
               }}
             >
-              {this.props.data.name}
+              {this.props.data.title}
             </h1>
             <div style={{ display: "inline", float: "right" }}>
               <img
@@ -80,7 +80,7 @@ class BracketThumbnail extends React.Component {
               </div>
             </div>
           </div>
-          <img src={this.props.data.image} className="bossdialogimage" />
+          <img src={this.props.data.url} className="bossdialogimage" />
           <p />
         </Dialog>
       </div>
