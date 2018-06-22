@@ -61,7 +61,7 @@ func runMatches(d ResponseStruct) {
 		redisClient.HSet("boss:"+id, "url", boss.Data.Url)             // Set url       to database
 		redisClient.HSet("boss:"+id, "permalink", boss.Data.Permalink) // Set permalink to database
 
-		redisClient.SAdd("match:"+matchId+":quarter", id) // Add boss to the quarterfinalists (all competitors are QFists from the start)
+		redisClient.RPush("match:"+matchId+":quarter", id) // Add boss to the quarterfinalists (all competitors are QFists from the start)
 	}
 
 	finalists := fightSlice(fightSlice(bosses, matchId, "semi"), matchId, "final") // Fight and set until 2 bosses left
@@ -77,9 +77,9 @@ func getBoss(id string) map[string]string {
 // getMatch() is... the ultimate shorthand. (for this project)
 func getMatch(id string) map[string][]string {
 	return map[string][]string{
-		"quarter": redisClient.SMembers("match:" + id + ":quarter").Val(),
-		"semi":    redisClient.SMembers("match:" + id + ":semi").Val(),
-		"final":   redisClient.SMembers("match:" + id + ":final").Val(),
+		"quarter": redisClient.LRange("match:" + id + ":quarter", 0, -1).Val(),
+		"semi":    redisClient.LRange("match:" + id + ":semi", 0, -1).Val(),
+		"final":   redisClient.LRange("match:" + id + ":final", 0, -1).Val(),
 		"winner":  []string{redisClient.Get("match:" + id + ":winner").Val()},
 	}
 }
@@ -118,7 +118,7 @@ func fightSlice(bosses []Boss, matchId string, suf string) (winners []Boss) {
 	winners = make([]Boss, l, l)
 	for i := 0; i < l; i++ {
 		winners[i] = fight(bosses[2*i], bosses[2*i+1])
-		redisClient.SAdd("match:"+matchId+":"+suf, winners[i].Id)
+		redisClient.RPush("match:"+matchId+":"+suf, winners[i].Id)
 	}
 	return
 }
