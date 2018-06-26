@@ -6,6 +6,7 @@ body {
 
 .App {
   text-align: center;
+  color:black;
 }
 
 .App-logo {
@@ -66,4 +67,30 @@ body {
   margin-right: auto;
   width: 50%;
   border-radius: 5px;
+}
+
+.countdown {
+  font-size:50px;
+  padding:30px;
+  margin-top:10px;
+  color:black;
+}
+.countdown-text {
+  font-size:50px;
+  margin-top:10px;
+  color:black;
+  letter-spacing:2px;
+  color:black;
+}
+
+.blinker {
+  animation: blinker 1s linear infinite;
+  font-size:60px;
+  color:red
+}
+
+@keyframes blinker {
+  100% {
+    opacity: 0;
+  }
 }

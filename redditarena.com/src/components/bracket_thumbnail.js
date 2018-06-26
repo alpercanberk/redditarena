@@ -54,34 +54,21 @@ class BracketThumbnail extends React.Component {
             >
               {this.props.data.title}
             </h1>
-            <div style={{ display: "inline", float: "right" }}>
+            <img src={this.props.data.url} className="bossdialogimage" />
+
+            <div>
               <img
                 src="https://i.imgur.com/o8yoe8k.png"
                 height="70"
                 width="70"
-                style={{
-                  display: "inline",
-                  position: "absolute",
-                  top: "20px",
-                  right: "100px"
-                }}
+
               />
-              <div
-                style={{
-                  display: "inline",
-                  position: "absolute",
-                  fontSize: "40px",
-                  right: "50px",
-                  top: "30px",
-                  color: "rgb(235,80,4)"
-                }}
-              >
+              <div>
                 {this.props.data.ups}
               </div>
             </div>
           </div>
-          <img src={this.props.data.url} className="bossdialogimage" />
-          <p />
+          
         </Dialog>
       </div>
     );

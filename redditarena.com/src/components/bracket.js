@@ -8,7 +8,7 @@ const murl = "http://localhost:1226/get_match"; //match url
 const burl = "http://localhost:1226/get_boss/"; //boss url
 const quarterMargins = [["34","0"], ["164","0"],["294","0"],["424","0"],["34","890"],["164","890"],["294","890"],["424","890"]];
 const semiMargins = [["100","180"],["360","180"],["100","710"],["360","710"]]
-const finalMargins = [["230","600"],["230","295"]]
+const finalMargins = [["230","295"],["230","600"]]
 
 const dummydata = {
   title: "Box",

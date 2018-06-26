@@ -3,7 +3,7 @@ import "../index.css";
 
 const Title = () => {
   return (
-    <h1 style={{ letterSpacing: 2 }}>
+    <h1 style={{ letterSpacing: 2, color:"black"}}>
       Welcome to <b className="emph">Reddit Arena</b>
     </h1>
   );
