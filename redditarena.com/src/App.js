@@ -8,6 +8,7 @@ import Title from "./components/title";
 import Bracket from "./components/bracket";
 import PastWinners from "./components/pastwinners";
 import WeeklyMatchup from "./components/weeklymatchup";
+import Countdown from "./components/countdown";
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
         <div className="App">
           <header className="App-header">
             <Title />
+            <Countdown />
             <Bracket />
             <PastWinners />
             <WeeklyMatchup />
