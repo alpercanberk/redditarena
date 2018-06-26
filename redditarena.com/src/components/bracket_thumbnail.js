@@ -56,19 +56,18 @@ class BracketThumbnail extends React.Component {
             </h1>
             <img src={this.props.data.url} className="bossdialogimage" />
 
-            <div>
+            <div className="thumbnail_upvote">
               <img
                 src="https://i.imgur.com/o8yoe8k.png"
-                height="70"
-                width="70"
-
+                height="30"
+                width="30"
+                className="thumbnail_upvote_img"
               />
-              <div>
+
                 {this.props.data.ups}
-              </div>
             </div>
           </div>
-          
+
         </Dialog>
       </div>
     );

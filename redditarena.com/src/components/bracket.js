@@ -10,15 +10,6 @@ const quarterMargins = [["34","0"], ["164","0"],["294","0"],["424","0"],["34","8
 const semiMargins = [["100","180"],["360","180"],["100","710"],["360","710"]]
 const finalMargins = [["230","295"],["230","600"]]
 
-const dummydata = {
-  title: "Box",
-  ups: "32",
-  thumbnail:
-    "https://b.thumbs.redditmedia.com/jJ1jvZ22CY7CoYdL8y5xRA6TmeBodjBuqF9cDZYoAbo.jpg",
-  image:
-    "https://i.redditmedia.com/9Co2pdqU0f6OsbNQrioMWBlQkDWxhJ0tQKZhBT02tSA.jpg?w=769&s=4a1d194b0f4215f32a792977cdf4efbe"
-};
-
 class Bracket extends Component {
   constructor(props) {
     super(props);
@@ -69,6 +60,7 @@ class Bracket extends Component {
           marginTop={quarterMargins[i][0]}
           marginLeft={quarterMargins[i][1]}
           data={this.state.quarter[i]}
+          className={"quarter"+i}
         />
       )
     }
@@ -79,6 +71,7 @@ class Bracket extends Component {
           marginTop={semiMargins[i][0]}
           marginLeft={semiMargins[i][1]}
           data={this.state.semi[i]}
+          className={"semi"+i}
         />
       )
     }
@@ -89,6 +82,7 @@ class Bracket extends Component {
           marginTop={finalMargins[i][0]}
           marginLeft={finalMargins[i][1]}
           data={this.state.final[i]}
+          className={"final"+i}
         />
       )
     }
@@ -120,7 +114,7 @@ class Bracket extends Component {
         </div>
       );
     } else {
-      return <div>loading</div>;
+      return <div>Loading...</div>;
     }
   }
 }

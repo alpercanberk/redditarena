@@ -27,7 +27,7 @@ class Countdown extends Component {
     var init_month = months[t.getMonth()];
     var init_day = t.getHours() > 18 ? t.getDate() + 1 : t.getDate();
     var init_year = t.getFullYear();
-    var init_time = "18:00:00";
+    var init_time = "15:14:40";
 
     this.state = {
       time: {},

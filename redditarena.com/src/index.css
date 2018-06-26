@@ -94,3 +94,18 @@ body {
     opacity: 0;
   }
 }
+
+.thumbnail_upvote {
+  display: flex;
+  font-size:30px;
+  display:inline-block;
+  color:#EB5428;
+  font-weight:bold;
+  position:absolute;
+  text-align:center;
+}
+
+.thumbnail_upvote_img {
+  margin-bottom:4px;
+  margin-right:3px;
+}
