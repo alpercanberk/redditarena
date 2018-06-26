@@ -3,6 +3,7 @@ package main
 import (
 	"math/rand"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -48,6 +49,7 @@ func runMatches(d ResponseStruct) {
 	// If the bosses aren't copied, for some reason, the ID's don't get set properly
 
 	for i, boss := range d.Data.Children { // Iterate over the bosses in d.Data.Children
+		boss.Data.Url = imgurFix(boss.Data.Url)   // add "i." and ".jpg" for various reasons (i'm looking at you erdoğan)
 		id := redisClient.Get("nextBossID").Val() // Assign ID
 		boss.Id, _ = strconv.Atoi(id)             // ^
 		bosses[i] = boss                          // This is here to copy the boss out of "d.Data.Children" to "bosses"
@@ -77,9 +79,9 @@ func getBoss(id string) map[string]string {
 // getMatch() is... the ultimate shorthand. (for this project)
 func getMatch(id string) map[string]map[string]string {
 	return map[string]map[string]string{
-		"quarter": strSliceToMap(redisClient.LRange("match:" + id + ":quarter", 0, -1).Val()),
-		"semi":    strSliceToMap(redisClient.LRange("match:" + id + ":semi", 0, -1).Val()),
-		"final":   strSliceToMap(redisClient.LRange("match:" + id + ":final", 0, -1).Val()),
+		"quarter": strSliceToMap(redisClient.LRange("match:"+id+":quarter", 0, -1).Val()),
+		"semi":    strSliceToMap(redisClient.LRange("match:"+id+":semi", 0, -1).Val()),
+		"final":   strSliceToMap(redisClient.LRange("match:"+id+":final", 0, -1).Val()),
 		"winner":  strSliceToMap([]string{redisClient.Get("match:" + id + ":winner").Val()}),
 	}
 }
@@ -130,6 +132,14 @@ func fightSlice(bosses []Boss, matchId string, suf string) (winners []Boss) {
 	for i := 0; i < l; i++ {
 		winners[i] = fight(bosses[2*i], bosses[2*i+1])
 		redisClient.RPush("match:"+matchId+":"+suf, winners[i].Id)
+	}
+	return
+}
+
+func imgurFix(link string) (fixedLink string) {
+	fixedLink = link
+	if link[len(link)-4] != '.' {
+		fixedLink = strings.Replace(link, "/im", "/i.im", 0) + ".jpg"
 	}
 	return
 }
